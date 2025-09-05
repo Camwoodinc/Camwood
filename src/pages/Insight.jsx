@@ -8,7 +8,7 @@ import AIGovernance from '../components/AIGovernance';
 import AIArchitecture from '../components/AIArchitecture';
 import AIOutcomes from '../components/AIOutcomes';
 import AIFaq from '../components/AIFaq';
-import AIFooter from '../components/AIFooter';
+import Footer from '../components/Footer';
 
 const Insight = () => {
   useEffect(() => {
@@ -73,7 +73,7 @@ const Insight = () => {
         <AIOutcomes />
         <AIFaq />
       </main>
-      <AIFooter />
+      <Footer />
     </>
   );
 };

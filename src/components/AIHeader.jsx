@@ -1,22 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const AIHeader = ({ onThemeToggle, theme }) => {
+const AIHeader = () => {
   return (
     <header className="site-header">
-      <div className="site-inner container">
+      <div className="container nav" role="navigation" aria-label="Main">
+
         
-        <nav className="nav" aria-label="Primary">
-          <a className="nav-link" href="#overview">Overview</a>
-          <a className="nav-link" href="#principles">Principles</a>
-          <a className="nav-link" href="#process">Process</a>
-          <a className="nav-link" href="#governance">Governance</a>
-          <a className="nav-link" href="#architecture">Architecture</a>
-          <a className="nav-link" href="#outcomes">Outcomes</a>
-          <a className="nav-link" href="#faq">FAQ</a>
+        <nav className="nav__links" aria-label="Primary">
+          <a href="#overview">Overview</a>
+          <a href="#principles">Principles</a>
+          <a href="#process">Process</a>
+          <a href="#governance">Governance</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#outcomes">Outcomes</a>
+          <a href="#faq">FAQ</a>
         </nav>
-        <button id="themeToggle" className="toggle-btn" onClick={onThemeToggle} aria-label="Toggle theme" title="Toggle theme">
-          <span>{theme === 'dark' ? '☀️' : '🌙'}</span>
-        </button>
       </div>
     </header>
   );

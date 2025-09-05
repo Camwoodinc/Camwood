@@ -29,6 +29,20 @@
   --max-w: 1200px;
 }
 
+/* Light theme colors */
+body[data-theme='light'] {
+  --color-bg: #f0f2f5;
+  --color-surface: #ffffff;
+  --color-text: #2c3e50;
+  --color-text-muted: #7f8c8d;
+  --color-line: #dbe4ee;
+  --color-brand-ink: #ffffff;
+  --color-brand: #4d74ff;
+  --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-deep: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
 /*
   🌐 Base Styles
   -------------
@@ -145,6 +159,23 @@ header {
   box-shadow: var(--shadow-medium);
 }
 
+.nav__cta_switch {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: transparent;
+  color: grey;
+  font-weight: 600;
+  box-shadow: var(--shadow-light);
+  /* Added shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav__cta_switch:hover {
+  transform: translateY(-2px) translateZ(5px);
+  /* Lift and push forward on hover */
+  box-shadow: var(--shadow-medium);
+}
+
 .nav__btn {
   border: 1px solid var(--color-line);
   background: transparent;
@@ -161,6 +192,19 @@ header {
   transform: translateY(-2px) translateZ(5px);
   box-shadow: var(--shadow-medium);
 }
+
+.nav-controls-mobile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle-btn-mobile {
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 6px 8px;
+}
+
 
 .nav__menu {
   display: none;
@@ -790,6 +834,10 @@ footer {
     display: none;
   }
 
+  .nav-controls-mobile {
+    display: none;
+  }
+
   /* Sections */
   .grid--2 {
     grid-template-columns: 1.1fr 0.9fr;
@@ -967,3 +1015,15 @@ footer {
   width: 20px;
   height: 20px;
 }
+
+.icon {
+  height: 100px;
+  width: 100px;
+}
+
+.nav__links a:hover {
+  transform: translateY(-2px) translateZ(5px);
+  /* Lift and push forward on hover */
+  box-shadow: var(--shadow-medium);
+}
+

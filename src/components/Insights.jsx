@@ -1,5 +1,6 @@
 import React from 'react';
 import insightsBg from '../assets/images/Insightbg.jpeg';
+import { Link } from 'react-router-dom';
 
 const Insights = () => (
   <div className="section-wrapper">
@@ -16,10 +17,10 @@ const Insights = () => (
             <h3>Operating Models that Actually Scale</h3>
             <p>Patterns for resilient growth without losing speed or quality.</p>
           </article>
-          <article className="card post">
+          <article className="card post"><Link to="/Insights">
             <div className="meta">Article • 5 min read</div>
             <h3>From Data to Decisions</h3>
-            <p>Turning analytics into accountable action.</p>
+            <p>Turning analytics into accountable action.</p></Link>
           </article>
           <article className="card post">
             <div className="meta">Webinar • Sept 24</div>
