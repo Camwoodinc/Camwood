@@ -15,27 +15,29 @@ const Footer = () => {
     <footer>
       <div className="container footer__grid">
         <div>
-          <div className="brand">
+        <a href=""><div className="brand">
             <div className="brand__mark" aria-hidden="true">
               <img src={logo} alt="Camwood Inc. Logo" />
             </div>
             <div className="brand__name">Camwood Inc.</div>
-          </div>
+          </div></a>
           <p className="mt-s" style={{ color: 'var(--ink-muted)' }}>Clarity. Delivery. Impact.</p>
         </div>
 
         <nav aria-label="Footer">
           <strong>Company</strong><br />
+          <span className='qlinks'>
           <a href="#about">About</a><br />
           <a href="#careers">Careers</a><br />
           <a href="#insights">Insights</a>
+          </span>
         </nav>
 
         <div>
           <strong>Connect</strong><br />
-          <a href="#">LinkedIn</a><br />
-          <a href="#">Twitter</a><br />
-          <a href="#">Contact</a>
+          <span className='social'><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className='LinkedIn'>LinkedIn</a><br />
+          <a href="https://www.x.com/" target="_blank" rel="noopener noreferrer" className='Twitter'>Twitter</a><br />
+          <a href="mailto:info@camwood.inc" target="_blank" rel="noopener noreferrer" className='Email'>Contact</a></span>
         </div>
       </div>
 

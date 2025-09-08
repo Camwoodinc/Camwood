@@ -63,7 +63,7 @@ const Header = () => {
             aria-label="Toggle light or dark theme"
             aria-pressed={theme === "dark"}
           >
-            <span aria-hidden>{theme === "dark" ? "☀️" : "🌙"}</span>
+            <span aria-hidden>{theme === "dark" ? "☀" : "☪︎"}</span>
             <span className="visually-hidden">
               {theme === "dark"
                 ? ""
@@ -81,7 +81,7 @@ const Header = () => {
             aria-label="Toggle light or dark theme"
             aria-pressed={theme === "dark"}
           >
-            {theme === "dark" ? "☀️" : "🌙"}
+            {theme === "dark" ? "☀" : "☪︎"}
           </button>
 
           <button
