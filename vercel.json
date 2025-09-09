@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "camwood-react/vite.config.js",
+      "src": "camwood-react/index.js",
       "use": "@vercel/vite",
       "config": { "includeBuildGlobal": true }
     },
