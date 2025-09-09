@@ -1,6 +1,9 @@
 import BM25 from "wink-bm25-text-search";
-// tokenizer from wink-tokenizer wasn't providing the `as` helpers reliably at runtime.
-// Use small local text-prep helpers instead so preprocessing always works.
+import type { Chunk } from "./store";
+import { loadKnowledge } from "./knowledge";
+import type { Retrieved } from "./types";
+
+// Helpers for text preprocessing
 const as = {
   lowerCase: (s: string) => (s ?? "").toLowerCase(),
   removePunc: (s: string) =>
@@ -42,9 +45,6 @@ const as = {
   },
   collapseWhitespace: (s: string) => (s ?? "").replace(/\s+/g, " ").trim(),
 };
-import type { Chunk } from "./store";
-import { loadKnowledge } from "./knowledge";
-import type { Retrieved } from "./types";
 
 export function buildSearchIndex(chunks: Chunk[]) {
   const kp = loadKnowledge();
@@ -52,7 +52,7 @@ export function buildSearchIndex(chunks: Chunk[]) {
   const index = BM25();
   index.defineConfig({
     fldWeights: {
-      content: 1,
+      body: 1,
     },
   });
 
@@ -185,7 +185,6 @@ export function buildSearchIndex(chunks: Chunk[]) {
   const allDocuments = [...knowledgeDocs, ...webDocs];
   console.log(`Number of documents to index: ${allDocuments.length}`);
 
-  // Deduplicate by id to avoid winkBM25S duplicate errors and reduce accidental skips.
   const uniqueByIdMap = new Map<string, { id: string; content: string }>();
   for (const d of allDocuments) {
     if (!uniqueByIdMap.has(d.id)) uniqueByIdMap.set(d.id, d);
@@ -202,10 +201,10 @@ export function buildSearchIndex(chunks: Chunk[]) {
     }
 
     try {
-      index.addDoc(doc);
+      index.addDoc({ id: doc.id, body: doc.content });
       addedDocCount++;
-    } catch (error) {
-      if (error.message.includes("Duplicate document encountered")) {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.message.includes("Duplicate document encountered")) {
         console.warn(`Duplicate document skipped: ${doc.id}`);
       } else {
         console.error("Error adding document to index:", error);
@@ -214,7 +213,6 @@ export function buildSearchIndex(chunks: Chunk[]) {
   });
 
   let isConsolidated = false;
-  // Consolidate only if we actually added at least two documents.
   if (addedDocCount > 1) {
     try {
       index.consolidate();
@@ -228,33 +226,32 @@ export function buildSearchIndex(chunks: Chunk[]) {
     );
   }
 
-  function search(q: string, k = 8): Retrieved[] {
+  async function search(q: string, k = 8): Promise<Retrieved[]> {
     if (!q || typeof q !== "string" || !q.trim()) return [];
 
-    // common preprocessing
     const processedQuery = as.collapseWhitespace(
       as.removeStopWords(as.removeDigits(as.removePunc(as.lowerCase(q))))
     );
 
-    // If consolidated, prefer BM25 search
     if (isConsolidated) {
       try {
         const hits = index.search(processedQuery).slice(0, k);
-        return hits.map((h: any) => ({ ...map[h[0]], score: h[1] }));
+        const results = hits.map((h: any) => ({ ...map[h[0]], score: h[1] }));
+        if (results.length > 0) {
+            return results;
+        }
       } catch (err: any) {
         console.error("BM25 search failed:", err?.message || err);
-        // fall through to naive fallback below
       }
     } else {
       console.warn("Index not consolidated: using fallback linear search.");
     }
 
-    // Fallback: simple linear scoring over the documents in `map`
     const escapeRegExp = (s: string) =>
       s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const terms = processedQuery.split(/\s+/).filter(Boolean);
     if (terms.length === 0) return [];
-
+    
     const scored = Object.values(map)
       .map((d) => {
         const text = (d.content || "").toLowerCase();
@@ -263,7 +260,6 @@ export function buildSearchIndex(chunks: Chunk[]) {
           const re = new RegExp("\\b" + escapeRegExp(t) + "\\b", "g");
           const m = text.match(re);
           if (m) score += m.length;
-          // also count substring matches as minor relevance
           else if (text.includes(t)) score += 0.5;
         }
         return { doc: d, score };

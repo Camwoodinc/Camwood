@@ -19,15 +19,16 @@ export function checkEscalation(q: string) {
 }
 
 export function lowConfidence(retrieved: Retrieved[]) {
-  const isKnowledgeQuery = retrieved.every(r => r.source === 'knowledge');
-  const topScore = retrieved?.[0]?.score || 0;
-  // If the query is entirely knowledge-based, we're likely confident.
-  // Otherwise, we check if the top search result is very low.
-  // We can also infer low confidence if there are no search results.
-  const isWebQuery = retrieved.some(r => r.source === 'web');
+  // If the search returned no results from the knowledge base, it's a low-confidence response
+  if (retrieved.length === 0) {
+    return true;
+  }
+
+  // Check if the top result's score is below a certain threshold
+  const topScore = retrieved[0].score;
   const isLowScore = topScore < 0.25;
 
-  return isWebQuery && isLowScore;
+  return isLowScore;
 }
 
 export function classifyIntent(q: string) {

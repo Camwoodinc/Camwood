@@ -1,4 +1,5 @@
-// filepath: /Users/mac/Desktop/Camwood/React/camwood-react/camwood-chatbot/src/data.ts
+import type { Chunk } from './store'; // Assume Chunk is defined here
+
 export const knowledgePack = {
   core_identity: {
     name: "Camwood Inc.",
@@ -124,8 +125,7 @@ export const knowledgePack = {
 
 // generate searchable chunks with stable, unique ids
 function makeChunksFromKP(kp: typeof knowledgePack) {
-  const out: { id: string; content: string; title?: string; url?: string }[] =
-    [];
+  const out: Chunk[] = [];
   let counter = 1;
 
   if (kp.core_identity) {
@@ -133,45 +133,50 @@ function makeChunksFromKP(kp: typeof knowledgePack) {
       id: `kp-core`,
       content: `${kp.core_identity.positioning} ${kp.core_identity.edge}`,
       title: kp.core_identity.name,
+      url: "" 
     });
   }
 
   (kp.brand_pillars || []).forEach((p) =>
-    out.push({ id: `kp-pillar-${counter++}`, content: p })
+    out.push({ id: `kp-pillar-${counter++}`, content: p, title: "", url: "" })
   );
 
   if (kp.company_overview?.summary) {
     out.push({
       id: `kp-overview-${counter++}`,
       content: kp.company_overview.summary,
+      title: "",
+      url: "" 
     });
   }
 
   Object.values(kp.industries_served || {}).forEach((v) =>
-    out.push({ id: `kp-ind-${counter++}`, content: v })
+    out.push({ id: `kp-ind-${counter++}`, content: v, title: "", url: "" })
   );
 
   (kp.use_cases || []).forEach((u) =>
-    out.push({ id: `kp-use-${counter++}`, content: u })
+    out.push({ id: `kp-use-${counter++}`, content: u, title: "", url: "" }) 
   );
 
   (kp.differentiators || []).forEach((d) =>
-    out.push({ id: `kp-diff-${counter++}`, content: d })
+    out.push({ id: `kp-diff-${counter++}`, content: d, title: "", url: "" }) 
   );
 
   (kp.faq || []).forEach((f) =>
     out.push({
       id: `kp-faq-${counter++}`,
       content: `${f.q} ${f.a}`,
+      title: "",
+      url: "" 
     })
   );
 
   // add some values / sample phrasing as smaller docs
   (kp.values || []).forEach((v) =>
-    out.push({ id: `kp-val-${counter++}`, content: v })
+    out.push({ id: `kp-val-${counter++}`, content: v, title: "", url: "" }) 
   );
   (kp.sample_phrasing || []).forEach((s) =>
-    out.push({ id: `kp-phr-${counter++}`, content: s })
+    out.push({ id: `kp-phr-${counter++}`, content: s, title: "", url: "" }) 
   );
 
   return out;

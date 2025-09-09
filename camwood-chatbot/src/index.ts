@@ -7,30 +7,21 @@ import { buildIndexFromChunks } from "./search";
 import { composeAnswer, composeEscalationResponse } from "./compose";
 import { classifyIntent, checkEscalation, lowConfidence } from "./decision";
 import { sendHandoffEmail } from "./mailer";
-
-export const chunks = [
-  {
-    id: "1",
-    content: "Example content for chunk 1",
-  },
-  {
-    id: "2",
-    content: "Example content for chunk 2",
-  },
-];
+import type { Chunk } from "./store";
+import { chunks } from "./data"; // Fix: Import the populated chunks array from data.ts
 
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 
-// Build the index from chunks
+// Build the index from the imported chunks
 const { search } = buildIndexFromChunks(chunks);
 
 if (!search) {
   console.error(
     "Search function is not available. Ensure the index is built correctly."
   );
-  process.exit(1); // Exit the process if search is undefined
+  process.exit(1);
 }
 
 app.get("/health", (_req, res) =>
@@ -51,15 +42,14 @@ app.post("/api/chat", async (req, res) => {
 
     const intent = classifyIntent(message);
     const esc = checkEscalation(message);
-
-    const retrieved = search(message, 8);
+    
+    const retrieved = await search(message, 8);
     const confidenceLow = lowConfidence(retrieved);
 
     if (esc.shouldEscalate || confidenceLow) {
       const reason = esc.reason || "uncertainty";
       const payload = composeEscalationResponse(reason);
 
-      // Auto-email handoff (Option B+): send summary to team immediately
       try {
         const fallbackFrom =
           /<([^>]+)>/.exec(cfg.smtp.from || "")?.[1] ||
@@ -102,7 +92,6 @@ Timestamp: ${new Date().toISOString()}`,
   }
 });
 
-// Email handoff endpoint (Option B manual trigger)
 app.post("/api/handoff", async (req, res) => {
   try {
     const { fromEmail, name, topic, message } = req.body as {
@@ -151,7 +140,9 @@ app.listen(cfg.port, () =>
   )
 );
 
-// Example usage of the search function
-const query = "example query";
-const results = search(query, 5); // Search for the top 5 results
-console.log("Search results:", results);
+const runExampleSearch = async () => {
+    const query = "example query";
+    const results = await search(query, 5);
+    console.log("Search results:", results);
+};
+runExampleSearch();
