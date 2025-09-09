@@ -1,5 +1,26 @@
 {
-    "buildCommand": "npm run build",
-    "devCommand": "npm run dev",
-    "installCommand": "npm install"
-  }
+  "version": 2,
+  "builds": [
+    {
+      "src": "camwood-react/vite.config.js",
+      "use": "@vercel/vite",
+      "config": { "includeBuildGlobal": true }
+    },
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    
+    {
+      "src": "/(.*)",
+      "dest": "camwood-react/index.html" 
+    },
+    
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    }
+  ]
+}
