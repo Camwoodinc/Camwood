@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev:main": "vite",
-    "dev:chatbot": "cd api && npm run dev",
+    "dev:chatbot": "cd camwood-chatbot && npm run dev",
     "dev": "concurrently \"npm run dev:main\" \"npm run dev:chatbot\"",
     "build": "vite build",
     "lint": "eslint .",
