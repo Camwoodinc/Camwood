@@ -1,0 +1,32 @@
+{
+    "name": "camwood-chatbot-backend",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "tsx src/index.ts",
+        "build": "tsc -p .",
+        "start": "node dist/index.js",
+        "crawl": "tsx src/crawl.ts"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "jsdom": "^24.0.0",
+        "node-fetch": "^3.3.2",
+        "nodemailer": "^6.9.13",
+        "ollama": "^0.5.17",
+        "openai": "^5.19.1",
+        "wink-bm25-text-search": "^3.0.0",
+        "wink-nlp-utils": "^2.1.0",
+        "wink-tokenizer": "^5.3.0"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.17",
+        "@types/express": "^4.17.21",
+        "@types/node": "^20.12.12",
+        "@types/nodemailer": "^7.0.1",
+        "tsx": "^4.15.7",
+        "typescript": "^5.5.4"
+    }
+}

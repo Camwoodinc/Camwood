@@ -1,0 +1,1062 @@
+/*
+  🎨 Variables
+  ------------
+  Defines a consistent color palette and spacing for the site.
+  System font stack for fast loading, can be swapped for brand fonts.
+*/
+:root {
+  --color-bg: #0d0f13;
+  /* page background - slightly darker */
+  --color-surface: #1a1e27;
+  /* cards/sections - slightly lighter for contrast */
+  --color-text: #cccccc;
+  /* primary text */
+  --color-text-muted: #b8bdc9;
+  /* secondary text */
+  --color-brand: #4d74ff;
+  /* accent color */
+  --color-brand-ink: #0c1226;
+  /* text on accent */
+  --color-line: #2e3547;
+  /* borders/dividers - slightly more pronounced */
+  --color-success: #3fbf7f;
+
+  --radius: 14px;
+  --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-deep: 0 12px 24px rgba(0, 0, 0, 0.6);
+  --space: clamp(16px, 3vw, 28px);
+  --max-w: 1200px;
+}
+
+/* Light theme colors */
+body[data-theme='light'] {
+  --color-bg: #f0f2f5;
+  --color-surface: #ffffff;
+  --color-text: #2c3e50;
+  --color-text-muted: #7f8c8d;
+  --color-line: #dbe4ee;
+  --color-brand-ink: #ffffff;
+  --color-brand: #4d74ff;
+  --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-deep: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/*
+  🌐 Base Styles
+  -------------
+  Global resets and base styles for a clean slate.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.55;
+  /* Essential for 3D transforms */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  width: min(100% - 2 * var(--space), var(--max-w));
+  margin-inline: auto;
+}
+
+/*
+  ⚡ Header - Mobile
+  ----------
+  Sticky navigation bar with a backdrop blur effect.
+*/
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(160%) blur(6px);
+  border-bottom: 1px solid var(--color-line);
+  background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  box-shadow: var(--shadow-light);
+  /* Added shadow to header */
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand__mark {
+  width: 50px;
+  height: 45px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: var(--color-brand-ink);
+  background: linear-gradient(
+    145deg,
+    var(--color-brand),
+    darken(var(--color-brand), 15%)
+  );
+  /* Gradient for depth */
+  box-shadow: var(--shadow-light);
+}
+
+.brand__name {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.nav__links {
+  display: none;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav__cta {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--color-brand);
+  color: var(--color-brand-ink);
+  font-weight: 600;
+  box-shadow: var(--shadow-light);
+  /* Added shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav__cta:hover {
+  transform: translateY(-2px) translateZ(5px);
+  /* Lift and push forward on hover */
+  box-shadow: var(--shadow-medium);
+}
+
+.nav__cta_switch {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: transparent;
+  color: grey;
+  font-weight: 600;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow-light);
+  /* Added shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav__cta_switch:hover {
+  transform: translateY(-2px) translateZ(5px);
+  /* Lift and push forward on hover */
+  box-shadow: var(--shadow-medium);
+}
+
+.nav__btn {
+  border: 1px solid var(--color-line);
+  background: transparent;
+  color: var(--color-text);
+  padding: 8px 10px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav__btn:hover {
+  transform: translateY(-2px) translateZ(5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.nav-controls-mobile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle-btn-mobile {
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 6px 8px;
+}
+
+
+.nav__menu {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  border-radius: 12px;
+  margin-top: 10px;
+  box-shadow: var(--shadow-medium);
+  /* Shadow for dropdown */
+}
+
+.nav__menu.is-open {
+  display: flex;
+}
+
+/*
+  🚀 Hero - Mobile
+  ----------
+  The main hero section with a rotating headline.
+*/
+.hero {
+  padding: clamp(40px, 6vw, 80px) 0;
+  min-height: 100dvh;
+  /* This will make the hero section cover the full viewport height */
+  display: flex;
+  align-items: center;
+}
+
+.hero__wrap {
+  display: grid;
+  gap: 24px;
+}
+
+.eyebrow {
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.78rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw + 1rem, 3.2rem);
+  line-height: 1.1;
+}
+
+.headline-rotate {
+  display: inline-grid;
+  position: relative;
+}
+
+.headline-rotate span {
+  grid-area: 1/1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: 0.5s ease;
+}
+
+.headline-rotate span.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero__sub {
+  color: var(--color-text-muted);
+  max-width: 60ch;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.heroticker {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+  ✨ Buttons
+  -----------
+  Base styles for buttons and a reusable primary variant.
+*/
+.btn,
+.btn--primary,
+.btn--contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--color-line);
+  background: linear-gradient(
+    145deg,
+    var(--color-surface),
+    darken(var(--color-surface), 10%)
+  );
+  color: var(--color-text);
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease,
+    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover,
+.btn--primary:hover,
+.btn--contact:hover {
+  background-color: #ffffff;
+  color: var(--color-brand);
+  border-color: #ffffff;
+  transform: translateY(-3px) translateZ(8px) rotateX(2deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.hero__meta {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+/*
+  📦 Sections - Mobile
+  -----------
+  Shared styles for sections, headers, and grid layouts.
+*/
+section {
+  padding: clamp(36px, 6vw, 72px) 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.section__head {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.h2 {
+  font-size: clamp(1.2rem, 2vw + 0.8rem, 2rem);
+  margin: 0;
+}
+
+.lead {
+  color: var(--color-text-muted);
+  max-width: 70ch;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grid--2 {
+  grid-template-columns: 1fr;
+}
+
+.grid--3 {
+  grid-template-columns: 1fr;
+}
+
+/*
+  🖼️ Section Backgrounds - Mobile
+  ----------------------
+  Styles for the full-width background images.
+*/
+.section-wrapper {
+  position: relative;
+  overflow: hidden;
+  /* Ensure image doesn't bleed */
+}
+
+.section-wrapper > section {
+  position: relative;
+  z-index: 2;
+  /* Ensures content is on top of the image */
+}
+
+.section-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.25;
+  /* Slightly reduced opacity for backgrounds */
+  object-fit: cover;
+  /* Ensures the image covers the entire container */
+  z-index: 0;
+  /* Places the image behind the section content */
+  transform: translateZ(-6px) scale(1.1);
+  /* Push background slightly back in 3D space */
+  filter: brightness(0.7) contrast(1.2);
+  /* Darken and add contrast to background images */
+}
+
+/*
+  🧱 Cards - Mobile
+  ---------
+  Reusable card component with a subtle hover effect.
+*/
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  width: 350px;
+  padding: 16px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.15);
+  /* Layered shadow for depth */
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  /* Enable 3D transforms for children */
+}
+
+.card:hover {
+  transform: translateY(-5px) translateZ(10px) rotateX(1deg);
+  /* Lift and push forward on hover */
+  border-color: color-mix(in srgb, var(--color-brand) 50%, var(--color-line));
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.25);
+  /* Deeper shadow on hover */
+}
+
+.card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #1c2131, #0f1320);
+  /* Gradient for icon */
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--color-text-muted);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+  /* Inset and small shadow for button feel */
+}
+
+.card h3 {
+  margin: 0.2rem 0 0.4rem;
+  font-size: 1.05rem;
+}
+
+.card p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.hidden-card {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .hidden-card {
+    display: none;
+  }
+}
+
+/*
+  📈 Case Studies - Mobile
+  ----------------
+  Layout for case study blocks.
+*/
+.cases {
+  display: grid;
+  gap: 16px;
+}
+
+.cases {
+  padding: 0;
+  overflow: hidden;
+}
+
+.case__media {
+  position: relative;
+  overflow: hidden;
+  height: 180px;
+  /* Consistent height for all media */
+  background: #0d0f16;
+  border-bottom: 1px solid var(--color-line);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-muted);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  /* Inner shadow for media */
+}
+
+.case__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.case__media-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.case:hover .case__media img {
+  transform: scale(1.05);
+}
+
+.case:hover .case__media-overlay {
+  opacity: 1;
+}
+
+.case__body {
+  padding: 14px;
+}
+
+
+
+.stat {
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+/*
+  🏛️ Logos Strip - Mobile
+  ----------------
+  A decorative strip of company logos.
+*/
+.logos {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+  opacity: 0.9;
+  border: 1px dashed var(--color-line);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: var(--shadow-light);
+  /* Shadow for logo strip */
+}
+
+.logo {
+  width: 88px;
+  height: 28px;
+  background: #1b2030;
+  border-radius: 6px;
+}
+
+/*
+  📝 Insights - Mobile
+  ------------
+  Layout for blog posts or insights.
+*/
+.posts {
+  display: grid;
+  gap: 16px;
+}
+
+.posts .meta {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+/*
+  💼 Careers - Mobile
+  -----------
+  Styles for a career page mosaic layout.
+*/
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.mosaic div {
+  aspect-ratio: 1/1;
+  background: #1b2030;
+  border-radius: 6px;
+}
+
+.badge {
+  display: inline-block;
+  font-weight: bolder;
+  padding: 3px 5px;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.careers_media {
+  border-radius: 18px;
+  box-shadow: var(--shadow-medium);
+}
+
+/* Shadow for media image */
+
+/*
+  ✉️ Contact - Mobile
+  ------------
+  Form styling.
+*/
+.contact {
+  background: linear-gradient(
+    to bottom right,
+    var(--color-surface),
+    color-mix(in srgb, var(--color-surface) 92%, black 8%)
+  );
+  /* Gradient for contact form */
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  padding: clamp(16px, 3vw, 24px);
+  box-shadow: var(--shadow-deep);
+  /* Deeper shadow for prominent form */
+  transform: translateZ(1px);
+  /* Push contact form forward */
+}
+
+form {
+  display: grid;
+  gap: 10px;
+}
+
+input,
+textarea {
+  background: #0f1320;
+  color: var(--color-text);
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  padding: 12px;
+  padding-right: 20px;
+  width: 100%;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4);
+  /* Inset shadow for input fields */
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--color-brand);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4),
+    0 0 0 2px rgba(var(--color-brand-rgb), 0.5);
+  /* Focus glow */
+  outline: none;
+}
+
+select {
+  /* Hides the default dropdown arrow and styling */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Adds a subtle background gradient for 3D depth */
+  background: linear-gradient(145deg, #1c2131, #0f1320);
+
+  /* Existing styles for border and color */
+  color: var(--color-text);
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  padding: 12px;
+  width: 100%;
+
+  /* Adds a more pronounced shadow for a raised, 3D effect */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.4);
+
+  /* Transitions for a smooth feel */
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+  /* Custom arrow for a consistent look */
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23b8bdc9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 20px;
+}
+
+select:hover {
+  border-color: color-mix(in srgb, var(--color-brand) 50%, var(--color-line));
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+select:focus {
+  border-color: var(--color-brand);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 0 0 2px color-mix(in srgb, var(--color-brand), transparent 50%);
+  outline: none;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/*
+  🦶 Footer - Mobile
+  ----------
+  Styles for the site footer.
+*/
+footer {
+  border-top: 1px solid var(--color-line);
+  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+}
+
+.footer__grid {
+  display: grid;
+  gap: 16px;
+  padding: 22px 0;
+}
+
+.ticker {
+  color: var(--color-text);
+  font-size: 1.1rem;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  /* Text shadow for ticker */
+}
+
+.legal {
+  border-top: 1px solid var(--color-line);
+  padding: 12px 0;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/*
+  🛠️ Utilities
+  --------------
+  Helper classes for common use cases.
+*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mt-s {
+  margin-top: 8px;
+}
+
+.mt-m {
+  margin-top: 14px;
+}
+
+.mt-l {
+  margin-top: 50px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.right {
+  text-align: right;
+}
+
+/* Marquee Styles */
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: scroll-left 20s linear infinite;
+}
+
+.marquee-content span {
+  display: inline-block;
+  margin-right: 18px;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/*
+  💻 Desktop Styles (720px and above)
+  ---------------------------------
+  These styles override the mobile styles for larger screens.
+*/
+@media (min-width: 720px) {
+  /* Header */
+  .nav__links {
+    display: flex;
+  }
+
+  .nav__btn {
+    display: none;
+  }
+
+  .nav-controls-mobile {
+    display: none;
+  }
+
+  /* Sections */
+  .grid--2 {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 24px;
+  }
+
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  /* Case Studies */
+  .cases {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Insights */
+  .posts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Footer */
+  .footer__grid {
+    grid-template-columns: 1.2fr 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.qlinks {
+  display: flex;
+  gap: 10px;
+  color: var(--color-text);
+}
+
+.qlinks a:hover{
+  font-weight: bolder;
+  color: #4d74ff;
+}
+
+.social {
+  display: flex;
+  gap: 10px;
+  color: var(--color-text);
+}
+
+.LinkedIn:hover{
+  font-weight: bolder;
+  color: #0077B5;
+}
+
+.Twitter:hover{
+  font-weight: bolder;
+  color: #1DA1F2;
+}
+
+.Email:hover{
+  font-weight: bolder;
+  color: red;
+}
+
+/*
+  🤖 Chatbot Interface
+  --------------------
+*/
+.chatbot-container {
+  position: fixed; /* Change from 'absolute' to 'fixed' */
+  bottom: 20px;
+  right: 25px;
+  z-index: 100; /* Ensure it's on top of other content */
+}
+
+/* Chatbot trigger button (the callout icon) */
+#chatbot-trigger {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  color: var(--color-brand-ink);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-deep);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#chatbot-trigger svg {
+  width: 32px;
+  height: 32px;
+}
+
+#chatbot-trigger:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Main conversation window */
+.chatbot-window {
+  width: min(350px, 90vw);
+  height: 500px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-deep);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: absolute; /* Keep this as absolute, as it's relative to its parent container */
+  bottom: 80px;
+  right: 0;
+  transform-origin: bottom right;
+  animation: scale-in 0.3s ease-out forwards;
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.chatbot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(
+    90deg,
+    var(--color-brand),
+    color-mix(in srgb, var(--color-brand) 70%, #00c6ff)
+  );
+  color: #fff;
+}
+
+.chatbot-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.chatbot-close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.chatbot-body {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-message {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 18px;
+  background: #2e3547;
+  color: var(--color-text);
+  align-self: flex-start;
+}
+
+.chat-message p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.chatbot-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid var(--color-line);
+  background: #15181f;
+}
+
+.chatbot-input input {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  padding: 8px 12px;
+  outline: none;
+}
+
+.chatbot-input button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-input button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.icon {
+  height: 100px;
+  width: 100px;
+}
+
+.nav__links a:hover {
+  transform: translateY(-2px) translateZ(5px);
+  /* Lift and push forward on hover */
+  box-shadow: var(--shadow-medium);
+}
+
