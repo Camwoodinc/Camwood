@@ -47,7 +47,6 @@ const App = () => {
           <Route path="/insights" element={<InsightsPage />} />
         </Routes>
       </Router>
-      <Chatbot />
     </>
   );
 };
