@@ -27,7 +27,7 @@ const Chatbot = () => {
     setHandoffData(null); // Clear any previous handoff suggestions
 
     try {
-      const response = await fetch('http://localhost:8787/api/chat', {
+      const response = await fetch('http://*:8787/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const Chatbot = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8787/api/handoff', {
+      const response = await fetch('http://*:8787/api/handoff', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
