@@ -1,5 +1,21 @@
 {
-    "buildCommand": "npm run build",
-    "devCommand": "npm run dev, cd camwood-chatbot && npm run dev",
-    "installCommand": "npm install"
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "/camwood-chatbot/index.js"
+      }
+    ],
+    "builds": [
+      {
+        "src": "camwood-chatbot/index.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "package.json",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "build"
+        }
+      }
+    ]
   }
