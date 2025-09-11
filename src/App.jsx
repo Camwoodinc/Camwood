@@ -11,7 +11,6 @@ import CareersSection from "./components/CareersSection";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
 import InsightsPage from "./pages/Insight";
-import Chatbot from "./components/Chatbot";
 
 const Home = () => (
   <>
@@ -47,7 +46,6 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/insights" element={<InsightsPage />} />
         </Routes>
-        <Chatbot />
       </Router>
     </>
   );
