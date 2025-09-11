@@ -1,0 +1,8 @@
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+[build]
+  # Your existing build settings, e.g.:
+  command = "npm run build"
+  publish = "dist" # Or wherever your React app is built
+  functionsDirectory = "camwood-chatbot" # This should point to your functions directory
