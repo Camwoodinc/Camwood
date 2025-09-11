@@ -10,8 +10,7 @@ import Insights from "./components/Insights";
 import CareersSection from "./components/CareersSection";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
-import Chatbot from "./components/Chatbot";
-import InsightsPage from "./pages/Insight"; // Renamed to avoid conflict
+import InsightsPage from "./pages/Insight";
 
 const Home = () => (
   <>
@@ -30,13 +29,14 @@ const Home = () => (
 );
 
 const App = () => {
-  // Add this useEffect hook to handle the light/dark mode logic
+  // Use a useEffect hook to set the theme based on the user's system preference
   useEffect(() => {
-    const theme = localStorage.getItem("theme");
-    if (theme) {
-      document.body.setAttribute("data-theme", theme);
-    }
-  }, []);
+    // Check if the user's system prefers a dark color scheme.
+    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Set the data-theme attribute on the body element.
+    document.body.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+  }, []); // The empty dependency array ensures this runs once on initial render.
 
   return (
     <>
