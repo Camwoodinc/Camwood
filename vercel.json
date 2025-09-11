@@ -1,4 +1,8 @@
 {
+    "buildCommand": "npm run build",
+    "devCommand": "npm run dev, cd camwood-chatbot && npm run dev",
+    "installCommand": "npm install",
+  
     "rewrites": [
       {
         "source": "/api/(.*)",
