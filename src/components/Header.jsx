@@ -1,9 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/camwoodlogo.svg";
 
 const Header = () => {
+  // derive initial theme from saved value or OS preference
+  const getInitialTheme = () => {
+    try {
+      const saved = window?.localStorage?.getItem("theme");
+      if (saved) return saved;
+      if (window?.matchMedia?.("(prefers-color-scheme: dark)").matches)
+        return "dark";
+    } catch {
+      /* ignore */
+    }
+    return "light";
+  };
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  // keep body attribute synced and persist theme
+  useEffect(() => {
+    document.body.setAttribute("data-theme", theme);
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {}
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((t) => (t === "dark" ? "light" : "dark"));
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen((s) => !s);
@@ -28,11 +54,36 @@ const Header = () => {
           <a href="/#contact" className="nav__cta">
             Partner With Us
           </a>
-          {/* Removed the desktop theme toggle button */}
+
+          {/* visible theme toggle for desktop */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="nav__cta_switch theme-toggle-btn"
+            aria-label="Toggle light or dark theme"
+            aria-pressed={theme === "dark"}
+          >
+            <span aria-hidden>{theme === "dark" ? "☀" : "☪︎"}</span>
+            <span className="visually-hidden">
+              {theme === "dark"
+                ? ""
+                : ""}
+            </span>
+          </button>
         </nav>
 
         <div className="nav-controls-mobile">
-          {/* Removed the mobile theme toggle button */}
+          {/* mobile theme toggle */}
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="nav__btn theme-toggle-btn-mobile"
+            aria-label="Toggle light or dark theme"
+            aria-pressed={theme === "dark"}
+          >
+            {theme === "dark" ? "☀" : "☪︎"}
+          </button>
+
           <button
             type="button"
             className="nav__btn"

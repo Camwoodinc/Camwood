@@ -29,20 +29,18 @@
   --max-w: 1200px;
 }
 
-/* Light theme colors - applied when the user's system prefers light mode */
-@media (prefers-color-scheme: light) {
-  :root {
-    --color-bg: #f0f2f5;
-    --color-surface: #ffffff;
-    --color-text: #2c3e50;
-    --color-text-muted: #7f8c8d;
-    --color-line: #dbe4ee;
-    --color-brand-ink: #ffffff;
-    --color-brand: #4d74ff;
-    --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.05);
-    --shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.1);
-    --shadow-deep: 0 12px 24px rgba(0, 0, 0, 0.15);
-  }
+/* Light theme colors */
+body[data-theme='light'] {
+  --color-bg: #f0f2f5;
+  --color-surface: #ffffff;
+  --color-text: #2c3e50;
+  --color-text-muted: #7f8c8d;
+  --color-line: #dbe4ee;
+  --color-brand-ink: #ffffff;
+  --color-brand: #4d74ff;
+  --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-deep: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
 
 /*
@@ -709,7 +707,7 @@ select:hover {
 
 select:focus {
   border-color: var(--color-brand);
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(var(--color-brand-rgb), 0.5);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4), 0 0 0 2px color-mix(in srgb, var(--color-brand), transparent 50%);
   outline: none;
 }
 
@@ -1061,3 +1059,4 @@ footer {
   /* Lift and push forward on hover */
   box-shadow: var(--shadow-medium);
 }
+
