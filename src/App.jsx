@@ -10,6 +10,7 @@ import Insights from "./components/Insights";
 import CareersSection from "./components/CareersSection";
 import ContactForm from "./components/ContactForm";
 import Footer from "./components/Footer";
+import Chatbot from "./components/Chatbot";
 import InsightsPage from "./pages/Insight"; // Renamed to avoid conflict
 
 const Home = () => (
